@@ -5,7 +5,7 @@ Courtesy of [the Odin Project.](https://www.theodinproject.com)
 
 ### CONTENT
 
-Just the game without the AI, so you can player PvP with someone. Then later on, the actual game with the AI itself.
+Just the game without the AI, so you can play PvP with someone. Then later on, the actual game with the AI itself.
 
 ### Skill level
 
