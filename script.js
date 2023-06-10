@@ -6,9 +6,12 @@ const Player = (name, mark) => {
 };
 
 const game = (() => {
-  let gameArray = Array(9);
+  const gameArray = Array(9).fill(undefined);
   let players;
   let turn = 0;
+  const draw = {
+    isDraw: true,
+  };
 
   const startGame = () => {
     players = [
@@ -39,15 +42,13 @@ const game = (() => {
   };
 
   const clearScreen = () => {
-    gameArray = Array(9);
-    players = undefined;
+    gameArray.fill(undefined);
+    let players;
   };
 
   const checkWinner = () => {
     for (let i = 0; i < 3; i++) {
       const rowSet = [Array(3), Array(3)];
-      const verticalRow = Array(3);
-      const horizontalRow = Array(3);
       for (let j = 0; j < 3; j++) {
         rowSet[0][j] = gameArray[i + 3 * j];
         rowSet[1][j] = gameArray[j + 3 * i];
@@ -71,12 +72,26 @@ const game = (() => {
         return players[turn];
       }
     }
+
+    if (gameArray.every(Boolean)) {
+      return draw;
+    }
   };
 
   const endGame = (winner) => {
-    console.log(
-      `${winner.getName()} of the ${winner.getMark()}-Team wins this round!`
-    );
+    if (winner.isDraw) {
+      console.log(
+        players
+          .map(
+            (player) => `${player.getName()} of the ${player.getMark()}-Team`
+          )
+          .join(" draws with ") + ". The ref wins!"
+      );
+    } else {
+      console.log(
+        `${winner.getName()} of the ${winner.getMark()}-Team wins this round!`
+      );
+    }
     clearScreen();
   };
 
