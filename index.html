@@ -79,6 +79,12 @@
                 }`;
               button.addEventListener("click", function () {
                 this.textContent = game.makeMove(i);
+                const winner = game.checkWinner();
+                if (winner) {
+                  const newGameForm = document.getElementById("new-game")
+                  newGameForm.style.display = "flex";
+                  game.endGame(winner);
+                }
               });
               gameContainer.appendChild(button);
             }
@@ -99,6 +105,21 @@
           </svg>
           <h4 id="P2-name"></h4>
         </article>
+        <form id="new-game" style="display: none;">
+          <button type="submit">New Game</button>
+          <label for="new-players">
+            <input type="checkbox" id="new-players" name="new-players">
+            With new players
+          </label>
+          <script>
+            {
+              const form = document.getElementById("new-game");
+              form.addEventListener("submit", function(event) {
+                event.preventDefault();
+              })
+            }
+          </script>
+        </form>
       </section>
     </section>
     <section class="hidden" id="rules">

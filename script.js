@@ -96,14 +96,10 @@ const game = (() => {
     const player = players[turn];
     gameArray[index] = player.getMark();
     printScreen();
-    const winner = checkWinner();
-    if (winner) {
-      endGame(winner);
-    }
     turn += 1;
     turn %= 2;
     return player.getMark();
   };
 
-  return { startGame, makeMove, printScreen };
+  return { startGame, makeMove, checkWinner, printScreen, endGame };
 })();
