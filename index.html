@@ -1,13 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The game of Tic-Tac-Toe that everyone knows and loves." />
   <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <script src="./script.js"></script>
+  <header>
+    <nav>
+      <form id="menu-select">
+        <input type="radio" name="view" id="view-1" value="game-area" checked />
+        <label for="view-1">
+          <h4>Play</h4>
+        </label>
+        <input type="radio" name="view" id="view-2" value="rules" />
+        <label for="view-2">
+          <h4>Rules</h4>
+        </label>
+        <input type="radio" name="view" id="view-3" value="tic-tac-special" />
+        <label for="view-3">
+          <h4>Tic-Tac™</h4>
+        </label>
+        <script>
+          {
+            const form = document.getElementById("menu-select");
+            form.addEventListener("change", (event) => {
+              Array.from(
+                document.querySelectorAll("main > section:not(.start)")
+              ).map((section) => section.classList.add("hidden"));
+              document
+                .getElementById(event.target.value)
+                .classList.remove("hidden");
+            });
+          }
+        </script>
+      </form>
+    </nav>
+  </header>
+  <main>
+    <section class="start">
+      <form id="start-form" style="display: grid">
+        <input type="text" name="P1" id="x-player" required maxlength="15" />
+        <input type="text" name="P2" id="o-player" required maxlength="15" style="text-align: right" />
+        <label for="x-player">
+          Player 1:&nbsp;<span style="color: #a855f7">X</span>
+        </label>
+        <label for="o-player">
+          <span style="color: #2f4194">O</span>:&nbsp;Player 2
+        </label>
+        <button type="submit">Start game</button>
+        <script>
+          {
+            const form = document.getElementById("start-form");
+            form.addEventListener("submit", (event) => {
+              event.preventDefault();
+              game.startGame(form.elements.P1.value, form.elements.P2.value);
+              ["P1", "P2"].forEach(player => {
+                document.getElementById(`${player}-name`).textContent = form.elements[player].value; 
+              })
+              form.parentElement.style.display = "none";
+            });
+          }
+        </script>
+      </form>
+    </section>
+    <section id="game-area">
+      <section class="game-container" id="game-container">
+        <script>
+          {
+            const gameContainer = document.getElementById("game-container");
+            for (let i = 0; i < 9; i++) {
+              const button = document.createElement("button");
+              button.title = `Play: Row ${1 + Math.floor(i / 3)}, Column ${1 + (i % 3)
+                }`;
+              button.addEventListener("click", function () {
+                this.textContent = game.makeMove(i);
+              });
+              gameContainer.appendChild(button);
+            }
+          }
+        </script>
+      </section>
+      <section class="stats" id="stats">
+        <h3>Players</h3>
+        <article>
+          <h4 id="P1-name"></h4>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.37774 50.37774">
+            <path fill="#8660a9" d="M28.53,25.18887,49.68579,4.033A2.3625,2.3625,0,0,0,46.34471.69195L25.18887,21.8478,4.033.69195A2.3625,2.3625,0,0,0,.69195,4.033L21.8478,25.18887.69195,46.34471A2.3625,2.3625,0,0,0,4.033,49.68579L25.18887,28.53,46.34471,49.68579a2.3625,2.3625,0,0,0,3.34108-3.34108Z" />
+          </svg>
+        </article>
+        <article>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 59.98145 59.98145">
+            <path fill="#2f4194" d="M29.99072,0A29.99073,29.99073,0,1,0,59.98145,29.99072,29.99073,29.99073,0,0,0,29.99072,0Zm0,52.84033A22.84961,22.84961,0,1,1,52.84039,29.99072,22.84959,22.84959,0,0,1,29.99072,52.84033Z" />
+          </svg>
+          <h4 id="P2-name"></h4>
+        </article>
+      </section>
+    </section>
+    <section class="hidden" id="rules">
+      Just click some stuff; you'll figure it out.
+    </section>
+    <section class="hidden" id="tic-tac-special">
+      Fun fact, I barely wrote code for this one.
+    </section>
+  </main>
 </body>
 </html>

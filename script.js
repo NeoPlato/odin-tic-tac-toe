@@ -13,11 +13,8 @@ const game = (() => {
     isDraw: true,
   };
 
-  const startGame = () => {
-    players = [
-      Player(prompt("Player 1: "), "X"),
-      Player(prompt("Player 2: "), "O"),
-    ];
+  const startGame = (P1, P2) => {
+    players = [Player(P1, "X"), Player(P2, "O")];
 
     console.log("We got: ");
     for (const player of players) {
@@ -97,7 +94,7 @@ const game = (() => {
 
   const makeMove = (index) => {
     const player = players[turn];
-    gameArray[index - 1] = player.getMark();
+    gameArray[index] = player.getMark();
     printScreen();
     const winner = checkWinner();
     if (winner) {
@@ -105,6 +102,7 @@ const game = (() => {
     }
     turn += 1;
     turn %= 2;
+    return player.getMark();
   };
 
   return { startGame, makeMove, printScreen };

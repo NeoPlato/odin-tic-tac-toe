@@ -1,1 +1,208 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap');
+/* Minimal reset */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
+  outline: none;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+select {
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Formatting */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f3e8ff;
+  font-family: "Nunito Sans", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+header {
+  height: clamp(4rem, 12.5vh, 8rem);
+  display: flex;
+  align-items: end;
+  border-bottom: 1px solid black;
+}
+
+header form {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  place-items: start center;
+}
+
+header input {
+  display: none;
+}
+
+header label {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+}
+
+label h4 {
+  font-weight: 400;
+}
+
+header input:checked + label {
+  --surrounding-color: #a78bfa;
+  background-image: linear-gradient(
+    to right,
+    var(--surrounding-color) 0%,
+    #f3e8ff 50%,
+    var(--surrounding-color) 100%
+  );
+}
+
+main {
+  flex: 1 1 0;
+  position: relative;
+}
+
+main > section {
+  width: 100vw;
+  height: 100%;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+section.start {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #f3e8ff;
+  align-items: center;
+  justify-content: center;
+}
+
+section.start form {
+  grid-template-columns: 1fr 1fr;
+  width: min(100%, 30rem);
+  row-gap: 0.5rem;
+  transform: translateY(-3rem);
+}
+
+section.start form :nth-child(even) {
+  justify-self: end;
+}
+
+section.start button {
+  grid-column: 1/3;
+  justify-self: center;
+  padding: 0.5rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 1.5rem;
+  border: none;
+  background-color: #A78BFA;
+  margin-top: 0.5rem;
+}
+
+section.start label {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+section.start span {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+section.start input {
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  width: 85%;
+  overflow-x: hidden;
+  background-color: #D8B4FE;
+}
+
+section.hidden {
+  display: none;
+}
+
+section.game-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  --size: min(calc(100vmin - 3rem), 400px);
+  width: var(--size);
+  height: var(--size);
+  gap: 0.5rem;
+}
+
+section.stats {
+  align-self: baseline;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+}
+
+section.stats svg {
+  height: 3rem;
+}
+
+section.stats h3 {
+  grid-column: 1/3;
+  text-align: center;
+}
+
+section.stats h4 {
+  font-size: 1.25rem;
+  text-overflow: clip;
+}
+
+section.stats article {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: start;
+}
+
+section.stats article:first-of-type {
+  justify-content: end;
+}
+
+.game-container button {
+  border-radius: 1.25rem;
+  border: none;
+  background-color: #facdd3;
+  font-size: 3rem;
+}
+
+.game-container button:active {
+  transform: rotate(-5deg);
+}
