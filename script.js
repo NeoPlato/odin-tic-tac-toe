@@ -13,9 +13,7 @@ const game = (() => {
     isDraw: true,
   };
 
-  const startGame = (P1, P2) => {
-    players = [Player(P1, "X"), Player(P2, "O")];
-
+  const restartGame = () => {
     console.log("We got: ");
     for (const player of players) {
       console.log(
@@ -24,6 +22,12 @@ const game = (() => {
     }
     console.log("BEGIN!");
     printScreen();
+  };
+
+  const startGame = (P1, P2) => {
+    players = [Player(P1, "X"), Player(P2, "O")];
+
+    restartGame();
   };
 
   const printScreen = () => {
@@ -40,7 +44,6 @@ const game = (() => {
 
   const clearScreen = () => {
     gameArray.fill(undefined);
-    let players;
   };
 
   const checkWinner = () => {
@@ -101,5 +104,12 @@ const game = (() => {
     return player.getMark();
   };
 
-  return { startGame, makeMove, checkWinner, printScreen, endGame };
+  return {
+    restartGame,
+    startGame,
+    makeMove,
+    checkWinner,
+    printScreen,
+    endGame,
+  };
 })();

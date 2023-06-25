@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,6 +9,7 @@
   <title>Tic Tac Toe</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
   <script src="./script.js"></script>
   <header>
@@ -54,15 +56,16 @@
         </label>
         <button type="submit">Start game</button>
         <script>
+          const startForm = document.getElementById("start-form");
           {
-            const form = document.getElementById("start-form");
-            form.addEventListener("submit", (event) => {
+            startForm.addEventListener("submit", (event) => {
               event.preventDefault();
-              game.startGame(form.elements.P1.value, form.elements.P2.value);
+              game.startGame(startForm.elements.P1.value, startForm.elements.P2.value);
               ["P1", "P2"].forEach(player => {
-                document.getElementById(`${player}-name`).textContent = form.elements[player].value; 
+                document.getElementById(`${player}-name`).textContent = startForm.elements[player].value;
+                startForm.elements[player].textContent = "";
               })
-              form.parentElement.style.display = "none";
+              startForm.parentElement.style.display = "none";
             });
           }
         </script>
@@ -71,8 +74,8 @@
     <section id="game-area">
       <section class="game-container" id="game-container">
         <script>
+          const gameContainer = document.getElementById("game-container");
           {
-            const gameContainer = document.getElementById("game-container");
             for (let i = 0; i < 9; i++) {
               const button = document.createElement("button");
               button.title = `Play: Row ${1 + Math.floor(i / 3)}, Column ${1 + (i % 3)
@@ -96,12 +99,14 @@
         <article>
           <h4 id="P1-name"></h4>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.37774 50.37774">
-            <path fill="#8660a9" d="M28.53,25.18887,49.68579,4.033A2.3625,2.3625,0,0,0,46.34471.69195L25.18887,21.8478,4.033.69195A2.3625,2.3625,0,0,0,.69195,4.033L21.8478,25.18887.69195,46.34471A2.3625,2.3625,0,0,0,4.033,49.68579L25.18887,28.53,46.34471,49.68579a2.3625,2.3625,0,0,0,3.34108-3.34108Z" />
+            <path fill="#8660a9"
+              d="M28.53,25.18887,49.68579,4.033A2.3625,2.3625,0,0,0,46.34471.69195L25.18887,21.8478,4.033.69195A2.3625,2.3625,0,0,0,.69195,4.033L21.8478,25.18887.69195,46.34471A2.3625,2.3625,0,0,0,4.033,49.68579L25.18887,28.53,46.34471,49.68579a2.3625,2.3625,0,0,0,3.34108-3.34108Z" />
           </svg>
         </article>
         <article>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 59.98145 59.98145">
-            <path fill="#2f4194" d="M29.99072,0A29.99073,29.99073,0,1,0,59.98145,29.99072,29.99073,29.99073,0,0,0,29.99072,0Zm0,52.84033A22.84961,22.84961,0,1,1,52.84039,29.99072,22.84959,22.84959,0,0,1,29.99072,52.84033Z" />
+            <path fill="#2f4194"
+              d="M29.99072,0A29.99073,29.99073,0,1,0,59.98145,29.99072,29.99073,29.99073,0,0,0,29.99072,0Zm0,52.84033A22.84961,22.84961,0,1,1,52.84039,29.99072,22.84959,22.84959,0,0,1,29.99072,52.84033Z" />
           </svg>
           <h4 id="P2-name"></h4>
         </article>
@@ -114,8 +119,16 @@
           <script>
             {
               const form = document.getElementById("new-game");
-              form.addEventListener("submit", function(event) {
+              form.addEventListener("submit", function (event) {
                 event.preventDefault();
+                Array.from(gameContainer.getElementsByTagName("button")).forEach(button => {
+                  button.textContent = "";
+                })
+                if (form.elements["new-players"].checked) {
+                  startForm.parentElement.removeAttribute("style");
+                } else {
+                  game.restartGame();
+                }
               })
             }
           </script>
@@ -130,4 +143,5 @@
     </section>
   </main>
 </body>
+
 </html>
