@@ -13,33 +13,8 @@ const game = (() => {
     isDraw: true,
   };
 
-  const restartGame = () => {
-    console.log("We got: ");
-    for (const player of players) {
-      console.log(
-        `${player.getName()} playing for the ${player.getMark()}-Team!`
-      );
-    }
-    console.log("BEGIN!");
-    printScreen();
-  };
-
   const startGame = (P1, P2) => {
     players = [Player(P1, "X"), Player(P2, "O")];
-
-    restartGame();
-  };
-
-  const printScreen = () => {
-    let gameState = "";
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        const mark = gameArray[j + i * 3];
-        gameState += mark !== undefined ? mark : "◾";
-      }
-      gameState += "\n";
-    }
-    console.log(gameState);
   };
 
   const clearScreen = () => {
@@ -76,40 +51,21 @@ const game = (() => {
     if (gameArray.every(Boolean)) {
       return draw;
     }
-  };
 
-  const endGame = (winner) => {
-    if (winner.isDraw) {
-      console.log(
-        players
-          .map(
-            (player) => `${player.getName()} of the ${player.getMark()}-Team`
-          )
-          .join(" draws with ") + ". The ref wins!"
-      );
-    } else {
-      console.log(
-        `${winner.getName()} of the ${winner.getMark()}-Team wins this round!`
-      );
-    }
-    clearScreen();
+    turn += 1;
+    turn %= 2;
   };
 
   const makeMove = (index) => {
     const player = players[turn];
     gameArray[index] = player.getMark();
-    printScreen();
-    turn += 1;
-    turn %= 2;
     return player.getMark();
   };
 
   return {
-    restartGame,
     startGame,
     makeMove,
     checkWinner,
-    printScreen,
-    endGame,
+    clearScreen,
   };
 })();

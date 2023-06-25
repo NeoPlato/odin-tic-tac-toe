@@ -86,7 +86,26 @@
                 if (winner) {
                   const newGameForm = document.getElementById("new-game")
                   newGameForm.style.display = "flex";
+                  game.clearScreen();
+                  // TODO: Do something with the winner to announce it
+                  // For now printing it live to console will work
                   game.endGame(winner);
+                  // Here's the previous code that made use of it
+                  //
+                  // if (winner.isDraw) {
+                  //   console.log(
+                  //     players
+                  //       .map(
+                  //         (player) => `${player.getName()} of the ${player.getMark()}-Team`
+                  //       )
+                  //       .join(" draws with ") + ". The ref wins!"
+                  //   );
+                  // } else {
+                  //   console.log(
+                  //     `${winner.getName()} of the ${winner.getMark()}-Team wins this round!`
+                  //   );
+                  // }
+                  // clearScreen();
                 }
               });
               gameContainer.appendChild(button);
@@ -126,8 +145,6 @@
                 })
                 if (form.elements["new-players"].checked) {
                   startForm.parentElement.removeAttribute("style");
-                } else {
-                  game.restartGame();
                 }
               })
             }
