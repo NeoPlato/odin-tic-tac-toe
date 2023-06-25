@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The game of Tic-Tac-Toe that everyone knows and loves." />
+  <meta
+    name="description"
+    content="The game of Tic-Tac-Toe that everyone knows and loves."
+  />
   <title>Tic Tac Toe</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
   <script src="./script.js"></script>
   <header>
     <nav>
       <form id="menu-select">
-        <input type="radio" name="view" id="view-1" value="game-area" checked />
+        <input
+          type="radio"
+          name="view"
+          id="view-1"
+          value="game-area"
+          checked
+        />
         <label for="view-1">
           <h4>Play</h4>
         </label>
@@ -47,7 +54,14 @@
     <section class="start">
       <form id="start-form" style="display: grid">
         <input type="text" name="P1" id="x-player" required maxlength="15" />
-        <input type="text" name="P2" id="o-player" required maxlength="15" style="text-align: right" />
+        <input
+          type="text"
+          name="P2"
+          id="o-player"
+          required
+          maxlength="15"
+          style="text-align: right"
+        />
         <label for="x-player">
           Player 1:&nbsp;<span style="color: #a855f7">X</span>
         </label>
@@ -60,12 +74,17 @@
           {
             startForm.addEventListener("submit", (event) => {
               event.preventDefault();
-              game.startGame(startForm.elements.P1.value, startForm.elements.P2.value);
-              ["P1", "P2"].forEach(player => {
-                document.getElementById(`${player}-name`).textContent = startForm.elements[player].value;
-                startForm.elements[player].textContent = "";
-              })
+              game.startGame(
+                startForm.elements.P1.value,
+                startForm.elements.P2.value
+              );
+              ["P1", "P2"].forEach((player) => {
+                document.getElementById(`${player}-name`).textContent =
+                  startForm.elements[player].value;
+                startForm.elements[player].value = "";
+              });
               startForm.parentElement.style.display = "none";
+              document.getElementById("new-game").style.display = "none";
             });
           }
         </script>
@@ -75,37 +94,41 @@
       <section class="game-container" id="game-container">
         <script>
           const gameContainer = document.getElementById("game-container");
+          let ITEM;
           {
             for (let i = 0; i < 9; i++) {
               const button = document.createElement("button");
-              button.title = `Play: Row ${1 + Math.floor(i / 3)}, Column ${1 + (i % 3)
-                }`;
+              button.title = `Play: Row ${1 + Math.floor(i / 3)}, Column ${
+                1 + (i % 3)
+              }`;
               button.addEventListener("click", function () {
+                if (this.textContent) {
+                  this.classList.add("mal-joué");
+                  setTimeout(() => {
+                    this.classList.remove("mal-joué");
+                  }, 250);
+                  return;
+                }
                 this.textContent = game.makeMove(i);
                 const winner = game.checkWinner();
                 if (winner) {
-                  const newGameForm = document.getElementById("new-game")
+                  const newGameForm = document.getElementById("new-game");
                   newGameForm.style.display = "flex";
+                  const winnerDeclaration =
+                    document.getElementById("winner-declaration");
+                  winnerDeclaration.parentElement.removeAttribute("style");
                   game.clearScreen();
-                  // TODO: Do something with the winner to announce it
-                  // For now printing it live to console will work
-                  game.endGame(winner);
-                  // Here's the previous code that made use of it
-                  //
-                  // if (winner.isDraw) {
-                  //   console.log(
-                  //     players
-                  //       .map(
-                  //         (player) => `${player.getName()} of the ${player.getMark()}-Team`
-                  //       )
-                  //       .join(" draws with ") + ". The ref wins!"
-                  //   );
-                  // } else {
-                  //   console.log(
-                  //     `${winner.getName()} of the ${winner.getMark()}-Team wins this round!`
-                  //   );
-                  // }
-                  // clearScreen();
+                  if (winner.isDraw) {
+                    winnerDeclaration.textContent =
+                      [winner.P1, winner.P2]
+                        .map(
+                          (player) =>
+                            `${player.getName()} of the ${player.getMark()}-Team`
+                        )
+                        .join(" draws with ") + ". The ref wins!";
+                  } else {
+                    winnerDeclaration.textContent = `${winner.getName()} of the ${winner.getMark()}-Team wins this round!`;
+                  }
                 }
               });
               gameContainer.appendChild(button);
@@ -117,22 +140,35 @@
         <h3>Players</h3>
         <article>
           <h4 id="P1-name"></h4>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.37774 50.37774">
-            <path fill="#8660a9"
-              d="M28.53,25.18887,49.68579,4.033A2.3625,2.3625,0,0,0,46.34471.69195L25.18887,21.8478,4.033.69195A2.3625,2.3625,0,0,0,.69195,4.033L21.8478,25.18887.69195,46.34471A2.3625,2.3625,0,0,0,4.033,49.68579L25.18887,28.53,46.34471,49.68579a2.3625,2.3625,0,0,0,3.34108-3.34108Z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 50.37774 50.37774"
+          >
+            <path
+              fill="#8660a9"
+              d="M28.53,25.18887,49.68579,4.033A2.3625,2.3625,0,0,0,46.34471.69195L25.18887,21.8478,4.033.69195A2.3625,2.3625,0,0,0,.69195,4.033L21.8478,25.18887.69195,46.34471A2.3625,2.3625,0,0,0,4.033,49.68579L25.18887,28.53,46.34471,49.68579a2.3625,2.3625,0,0,0,3.34108-3.34108Z"
+            />
           </svg>
         </article>
         <article>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 59.98145 59.98145">
-            <path fill="#2f4194"
-              d="M29.99072,0A29.99073,29.99073,0,1,0,59.98145,29.99072,29.99073,29.99073,0,0,0,29.99072,0Zm0,52.84033A22.84961,22.84961,0,1,1,52.84039,29.99072,22.84959,22.84959,0,0,1,29.99072,52.84033Z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 59.98145 59.98145"
+          >
+            <path
+              fill="#2f4194"
+              d="M29.99072,0A29.99073,29.99073,0,1,0,59.98145,29.99072,29.99073,29.99073,0,0,0,29.99072,0Zm0,52.84033A22.84961,22.84961,0,1,1,52.84039,29.99072,22.84959,22.84959,0,0,1,29.99072,52.84033Z"
+            />
           </svg>
           <h4 id="P2-name"></h4>
         </article>
-        <form id="new-game" style="display: none;">
+        <article class="winner-declaration" style="display: none">
+          <h4 id="winner-declaration">I win</h4>
+        </article>
+        <form id="new-game" style="display: none">
           <button type="submit">New Game</button>
           <label for="new-players">
-            <input type="checkbox" id="new-players" name="new-players">
+            <input type="checkbox" id="new-players" name="new-players" />
             With new players
           </label>
           <script>
@@ -140,13 +176,17 @@
               const form = document.getElementById("new-game");
               form.addEventListener("submit", function (event) {
                 event.preventDefault();
-                Array.from(gameContainer.getElementsByTagName("button")).forEach(button => {
+                Array.from(
+                  gameContainer.getElementsByTagName("button")
+                ).forEach((button) => {
                   button.textContent = "";
-                })
+                });
                 if (form.elements["new-players"].checked) {
                   startForm.parentElement.removeAttribute("style");
                 }
-              })
+                form.style.display = "none";
+                form.previousElementSibling.style.display = "none";
+              });
             }
           </script>
         </form>
@@ -160,5 +200,4 @@
     </section>
   </main>
 </body>
-
 </html>

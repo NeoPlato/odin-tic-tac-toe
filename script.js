@@ -11,10 +11,14 @@ const game = (() => {
   let turn = 0;
   const draw = {
     isDraw: true,
+    P1: undefined,
+    P2: undefined,
   };
 
   const startGame = (P1, P2) => {
     players = [Player(P1, "X"), Player(P2, "O")];
+    draw.P1 = P1;
+    draw.P2 = P2;
   };
 
   const clearScreen = () => {

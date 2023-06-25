@@ -202,6 +202,11 @@ section.stats article:first-of-type {
   justify-content: end;
 }
 
+section.stats article.winner-declaration {
+  justify-content: center;
+  grid-column: 1/3;
+}
+
 section.stats form {
   grid-column: 1/3;
   align-items: center;
@@ -245,6 +250,12 @@ section.stats form button {
   background-color: #facdd3;
   font-size: 3rem;
   font-weight: lighter;
+}
+
+button.mal-joué {
+  border: 2px solid red;
+  transform: rotate(5deg);
+  transition: 250ms ease-in;
 }
 
 .game-container button:active {
