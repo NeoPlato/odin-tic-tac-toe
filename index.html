@@ -53,11 +53,12 @@
   <main>
     <section class="start">
       <form id="start-form" style="display: grid">
-        <input type="text" name="P1" id="x-player" required maxlength="15" />
+        <input type="text" name="P1" id="x-player" value="Player 1" required maxlength="15" />
         <input
           type="text"
           name="P2"
           id="o-player"
+          value="Player 2"
           required
           maxlength="15"
           style="text-align: right"
@@ -81,10 +82,10 @@
               ["P1", "P2"].forEach((player) => {
                 document.getElementById(`${player}-name`).textContent =
                   startForm.elements[player].value;
-                startForm.elements[player].value = "";
               });
               startForm.parentElement.style.display = "none";
               document.getElementById("new-game").style.display = "none";
+              document.getElementById('view-3').disabled = true;
             });
           }
         </script>
@@ -94,13 +95,9 @@
       <section class="game-container" id="game-container">
         <script>
           const gameContainer = document.getElementById("game-container");
-          let ITEM;
           {
             for (let i = 0; i < 9; i++) {
               const button = document.createElement("button");
-              button.title = `Play: Row ${1 + Math.floor(i / 3)}, Column ${
-                1 + (i % 3)
-              }`;
               button.addEventListener("click", function () {
                 if (this.textContent) {
                   this.classList.add("mal-joué");
@@ -136,7 +133,7 @@
           }
         </script>
       </section>
-      <section class="stats" id="stats">
+      <section class="stats">
         <h3>Players</h3>
         <article>
           <h4 id="P1-name"></h4>
@@ -186,6 +183,7 @@
                 }
                 form.style.display = "none";
                 form.previousElementSibling.style.display = "none";
+                document.getElementById('view-3').disabled = false;
               });
             }
           </script>
@@ -196,7 +194,72 @@
       Just click some stuff; you'll figure it out.
     </section>
     <section class="hidden" id="tic-tac-special">
-      I'll make this soon. It shouldn't even be that hard.
+      <section class="game-container" id="game-simple">
+        <script>
+          const gameSimple = document.getElementById("game-simple");
+          let turnCount = 0;
+          {
+            gameSimple.style.gridTemplateColumns = "repeat(2, 1fr)";
+            gameSimple.style.gridTemplateRows = "repeat(2, 1fr)";
+            for (let i = 0; i < 4; i++) {
+              const button = document.createElement("button");
+              button.addEventListener("click", function () {
+                if (this.textContent) {
+                  this.classList.add("mal-joué");
+                  setTimeout(() => {
+                    this.classList.remove("mal-joué");
+                  }, 250);
+                  return;
+                }
+                this.textContent = turnCount % 2 == 0 ? "X" : "O";
+                turnCount += 1;
+                if (turnCount == 3) {
+                  const newGameForm = document.getElementById("newer-game");
+                  newGameForm.style.display = "flex";
+                  const winnerDeclaration =
+                    document.getElementById("winner-declaration-2");
+                  winnerDeclaration.parentElement.removeAttribute("style");
+                  winnerDeclaration.textContent = `${startForm.elements.P1.value} of the X-Team wins this round, and all consecutive rounds for eternity!`;
+                  turnCount = 0;
+                }
+              });
+              gameSimple.appendChild(button);
+            }
+          }
+        </script>
+      </section>
+      <section class="stats">
+        <h3>Lol why even</h3>
+        <article class="winner-declaration" style="display: none">
+          <h4 id="winner-declaration-2"></h4>
+        </article>
+        <form id="newer-game" style="display: none">
+          <button type="submit">New Game</button>
+          <label for="newer-players">
+            <input type="checkbox" id="newer-players" name="newer-players" />
+            With new players
+          </label>
+          <script>
+            {
+              const form = document.getElementById("newer-game");
+              form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                Array.from(
+                  gameSimple.getElementsByTagName("button")
+                ).forEach((button) => {
+                  button.textContent = "";
+                });
+                if (form.elements["newer-players"].checked) {
+                  startForm.parentElement.removeAttribute("style");
+                  document.getElementById("winner-declaration-2").textContent = "";
+                }
+                form.style.display = "none";
+                form.previousElementSibling.style.display = "none";
+              });
+            }
+          </script>
+        </form>
+      </section>
     </section>
   </main>
 </body>
