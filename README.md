@@ -9,7 +9,7 @@ Just the game without the AI, so you can play PvP with someone. Then later on, t
 
 ### Skill level
 
-* [*] Get a PhD in tic-theory™.
-* [*] Create the 2-player game.
-* [*] Style the thing with a theme of sorts.
+* [x] Get a PhD in tic-theory™.
+* [x] Create the 2-player game.
+* [x] Style the thing with a theme of sorts.
 * [ ] Add the unbeatable AI.
