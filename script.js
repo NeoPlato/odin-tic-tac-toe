@@ -5,20 +5,13 @@ const Player = (name, mark) => {
   return { getMark, getName };
 };
 
-const game = (() => {
-  const gameArray = Array(9).fill(undefined);
-  let players;
+const normalGame = (() => {
   let turn = 0;
-  const draw = {
-    isDraw: true,
-    P1: undefined,
-    P2: undefined,
-  };
-
+  let players;
+  const gameArray = Array(9).fill(undefined);;
+  
   const startGame = (P1, P2) => {
     players = [Player(P1, "X"), Player(P2, "O")];
-    draw.P1 = P1;
-    draw.P2 = P2;
   };
 
   const clearScreen = () => {
@@ -53,7 +46,11 @@ const game = (() => {
     }
 
     if (gameArray.every(Boolean)) {
-      return draw;
+      return {
+        isDraw: true,
+        P1: players[0],
+        P2: players[1],
+      };
     }
 
     turn += 1;
@@ -71,5 +68,33 @@ const game = (() => {
     makeMove,
     checkWinner,
     clearScreen,
+  };
+})();
+
+const ticTac = (() => {
+  let players;
+  let turn = 0;
+
+  const startGame = (P1, P2) => {
+    players = [Player(P1, "X"), Player(P2, "O")];
+  };
+
+  const checkWinner = () => {
+    if (turn == 3) {
+      return players[0];
+    }
+
+    turn += 1;
+  };
+
+  const makeMove = (index) => {
+    const player = players[turn % 2];
+    return player.getMark();
+  };
+
+  return {
+    startGame,
+    makeMove,
+    checkWinner,
   };
 })();

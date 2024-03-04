@@ -175,6 +175,7 @@ section.stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem 2rem;
+  width: min(100%, 40ch);
 }
 
 section.stats svg {
@@ -188,7 +189,7 @@ section.stats h3 {
 
 section.stats h4 {
   font-size: 1.25rem;
-  text-overflow: clip;
+  text-align: center;
 }
 
 section.stats article {
